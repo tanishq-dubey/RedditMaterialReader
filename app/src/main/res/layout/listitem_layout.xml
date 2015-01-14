@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/listItemLayout">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="false"
+        android:id="@+id/thumbImageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lots of Title Text Whoo Hoo Testing Placeholder More Text Too Please"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/titleTextView"
+        android:layout_toEndOf="@+id/thumbImageView"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_above="@+id/dateTextView"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateTextView"
+        android:text="January 14, 2014 5:35:20 PM"
+        android:layout_alignBottom="@+id/thumbImageView"
+        android:layout_alignEnd="@+id/titleTextView"
+        android:layout_toEndOf="@+id/thumbImageView"
+        android:gravity="center" />
+
+</RelativeLayout>

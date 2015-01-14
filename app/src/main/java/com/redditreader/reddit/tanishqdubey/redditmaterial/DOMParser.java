@@ -58,6 +58,7 @@ public class DOMParser {
                             _item.set_title(theString);
                         } else if ("description".equals(nodeName)){
                             _item.set_description(theString);
+                            _item.set_image("R.drawable.ic_launcher");
                         } else if ("pubDate".equals(nodeName)){
                             String formattedDate = theString.replace(" +0000", "");
                             _item.set_date(formattedDate);
