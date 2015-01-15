@@ -184,5 +184,21 @@ public class ImageLoader {
         memoryCache.clear();
         fileCache.clear();
     }
+    
+    public static Bitmap simpleGetBitmapFromURL(String src){
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            Bitmap returnBitmap = BitmapFactory.decodeStream(inputStream);
+            return  returnBitmap;
+        } catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
 
 }

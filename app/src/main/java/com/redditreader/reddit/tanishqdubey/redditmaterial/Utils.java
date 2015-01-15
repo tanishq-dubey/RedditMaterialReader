@@ -1,5 +1,7 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
+import android.graphics.Bitmap;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 

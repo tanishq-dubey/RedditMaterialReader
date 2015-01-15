@@ -29,11 +29,10 @@ public class DetailActivity extends ActionBarActivity {
         descriptionView =(WebView) findViewById(R.id.detailWebView);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Reddit Material");
+        actionBar.setTitle("Material Reddit");
         actionBar.setSubtitle(feed.getItem(pos).get_title());
 
         WebSettings webSettings =  descriptionView.getSettings();
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         webSettings.getPluginState();
         webSettings.setPluginState(WebSettings.PluginState.ON);
         webSettings.setJavaScriptEnabled(true);

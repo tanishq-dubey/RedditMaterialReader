@@ -1,5 +1,8 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
+import android.graphics.Color;
+import android.support.v7.graphics.Palette;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -56,6 +59,16 @@ public class DOMParser {
                     if ("media:thumbnail".equals(nodeName)){
                         imageURL = nodeChild.item(j).getAttributes().getNamedItem("url").getNodeValue();
                         _item.set_image(imageURL);
+                        Palette palette = Palette.generate(ImageLoader.simpleGetBitmapFromURL(imageURL));
+                        Palette.Swatch swatch = palette.getVibrantSwatch();
+                        if (swatch != null){
+                            _item.set_backGroundColor(swatch.getRgb());
+                            _item.setTextColor(swatch.getTitleTextColor());
+                        }else {
+                            _item.set_backGroundColor(Color.GRAY);
+                            _item.setTextColor(Color.DKGRAY);
+                        }
+
                         theString = null;
                     }else {
                         theString = nodeChild.item(j).getFirstChild().getNodeValue();
@@ -88,9 +101,7 @@ public class DOMParser {
         }catch (NullPointerException e){
             e.printStackTrace();
         }
-
         return _feed;
-
     }
 
 }

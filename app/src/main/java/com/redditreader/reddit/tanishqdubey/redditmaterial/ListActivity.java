@@ -99,11 +99,13 @@ public class ListActivity extends ActionBarActivity {
             TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
 
             imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
-
             relativeListLayout = (RelativeLayout) listItem.findViewById(R.id.listItemLayout);
+            relativeListLayout.setBackgroundColor(feed.getItem(pos).get_backGroundColor());
             
             textTitle.setText(feed.getItem(pos).get_title());
+            textTitle.setTextColor(feed.getItem((pos)).getTextColor());
             textDate.setText(feed.getItem(pos).get_date());
+            textDate.setTextColor(feed.getItem(pos).getTextColor());
 
             return listItem;
         }

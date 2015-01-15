@@ -2,9 +2,6 @@ package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 import java.io.Serializable;
 
-/**
- * Created by Tanishq Dubey on 1/14/2015.
- */
 public class RSSItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -14,6 +11,24 @@ public class RSSItem implements Serializable {
     private String _date = null;
     private String _image = null;
     private String _link = null;
+    private int _backGroundColor;
+    private int _textColor;
+    
+    public int getTextColor(){
+        return _textColor;        
+    }
+    
+    public void setTextColor(int textColor){
+        _textColor = textColor;
+    }
+    
+    public int get_backGroundColor(){
+        return _backGroundColor; 
+    }
+    
+    public void set_backGroundColor(int backgroundColor) {
+        _backGroundColor = backgroundColor;        
+    }
 
     public String get_link() {
         return _link;
@@ -54,6 +69,4 @@ public class RSSItem implements Serializable {
     public void set_image(String image) {
         _image = image;
     }
-
-
 }
