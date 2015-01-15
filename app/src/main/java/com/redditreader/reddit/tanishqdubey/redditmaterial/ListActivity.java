@@ -40,6 +40,9 @@ public class ListActivity extends ActionBarActivity {
         lView = (ListView) findViewById(R.id.listView);
         lView.setVerticalFadingEdgeEnabled(true);
 
+        adapter = new CustomListAdapter(this);
+        lView.setAdapter(adapter);
+
         lView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,13 +54,6 @@ public class ListActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.imageLoader.clearCache();
-        adapter.notifyDataSetChanged();
     }
 
     class CustomListAdapter extends BaseAdapter{
@@ -97,7 +93,7 @@ public class ListActivity extends ActionBarActivity {
             TextView textTitle = (TextView) listItem.findViewById(R.id.titleTextView);
             TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
 
-            imageLoader.DisplayImage(feed.getItem(pos).get_image(),imageView);
+            imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
             textTitle.setText(feed.getItem(pos).get_title());
             textDate.setText(feed.getItem(pos).get_date());
 

@@ -13,6 +13,15 @@ public class RSSItem implements Serializable {
     private String _description = null;
     private String _date = null;
     private String _image = null;
+    private String _link = null;
+
+    public String get_link() {
+        return _link;
+    }
+
+    public void set_link(String link) {
+      _link = link;
+    }
 
     public String get_title() {
         return _title;

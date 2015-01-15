@@ -1,18 +1,21 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
+import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 
 public class DetailActivity extends ActionBarActivity {
 
     RSSFeed feed;
-    TextView titleView;
     WebView descriptionView;
 
     @Override
@@ -23,18 +26,21 @@ public class DetailActivity extends ActionBarActivity {
         feed = (RSSFeed) getIntent().getExtras().get("feed");
         int pos = getIntent().getExtras().getInt("pos");
 
-        titleView = (TextView) findViewById(R.id.detailTitleText);
         descriptionView =(WebView) findViewById(R.id.detailWebView);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Reddit Material");
+        actionBar.setSubtitle(feed.getItem(pos).get_title());
 
         WebSettings webSettings =  descriptionView.getSettings();
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.getPluginState();
         webSettings.setPluginState(WebSettings.PluginState.ON);
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
 
-        titleView.setText(feed.getItem(pos).get_title());
-        descriptionView.loadUrl("https://www.google.com/");
+        descriptionView.setWebViewClient(new WebViewClient());
+
+        descriptionView.loadUrl(feed.getItem(pos).get_link());
     }
 
 
@@ -44,6 +50,7 @@ public class DetailActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

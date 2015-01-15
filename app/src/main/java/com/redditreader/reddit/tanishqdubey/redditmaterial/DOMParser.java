@@ -1,6 +1,7 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -49,19 +50,30 @@ public class DOMParser {
                 for (int j = 0; j < childNodeLength; j = j + 1){
                     Node thisNode = nodeChild.item(j);
                     String theString = null;
+                    String imageURL = null;
                     String nodeName = thisNode.getNodeName();
 
-                    theString = nodeChild.item(j).getFirstChild().getNodeValue();
+                    if ("media:thumbnail".equals(nodeName)){
+                        imageURL = nodeChild.item(j).getAttributes().getNamedItem("url").getNodeValue();
+                        _item.set_image(imageURL);
+                        theString = null;
+                    }else {
+                        theString = nodeChild.item(j).getFirstChild().getNodeValue();
+                    }
 
                     if (theString != null){
                         if ("title".equals(nodeName)){
                             _item.set_title(theString);
                         } else if ("description".equals(nodeName)){
                             _item.set_description(theString);
-                            _item.set_image("R.drawable.ic_launcher");
+
+                            //In case no 'media:thumbnail' comes up, placeholder image.
+                            _item.set_image("http://www.imagemagick.org/Usage/canvas/gradient_bilinear.jpg");
                         } else if ("pubDate".equals(nodeName)){
                             String formattedDate = theString.replace(" +0000", "");
                             _item.set_date(formattedDate);
+                        } else if ("link".equals(nodeName)){
+                            _item.set_link(theString);
                         }
                     }
                 }

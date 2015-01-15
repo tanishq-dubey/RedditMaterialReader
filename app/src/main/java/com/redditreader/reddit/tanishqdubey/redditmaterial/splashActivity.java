@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 public class splashActivity extends ActionBarActivity {
 
-    private String RESSFEEDURL = "http://www.reddit.com/r/dinnerconspiracies/.rss";
+    private String RESSFEEDURL = "http://www.reddit.com/r/pics/.rss";
 
     RSSFeed feed;
 
@@ -63,7 +63,7 @@ public class splashActivity extends ActionBarActivity {
             Bundle bundle = new Bundle();
             bundle.putSerializable("feed", feed);
 
-            Intent intent = new Intent(splashActivity.this, ListActivity.class);
+            Intent intent = new Intent(splashActivity.this, com.redditreader.reddit.tanishqdubey.redditmaterial.ListActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
 
