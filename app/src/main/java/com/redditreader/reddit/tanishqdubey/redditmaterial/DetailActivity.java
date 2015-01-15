@@ -33,7 +33,7 @@ public class DetailActivity extends ActionBarActivity {
         actionBar.setSubtitle(feed.getItem(pos).get_title());
 
         WebSettings webSettings =  descriptionView.getSettings();
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         webSettings.getPluginState();
         webSettings.setPluginState(WebSettings.PluginState.ON);
         webSettings.setJavaScriptEnabled(true);

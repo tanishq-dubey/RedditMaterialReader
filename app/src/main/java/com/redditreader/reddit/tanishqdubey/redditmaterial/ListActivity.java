@@ -3,8 +3,11 @@ package com.redditreader.reddit.tanishqdubey.redditmaterial;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +16,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import java.util.List;
 
 
 public class ListActivity extends ActionBarActivity {
@@ -26,6 +28,7 @@ public class ListActivity extends ActionBarActivity {
     ListView lView;
     CustomListAdapter adapter;
     Context mContext;
+    RelativeLayout relativeListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class ListActivity extends ActionBarActivity {
         myApplication = getApplication();
 
         feed = (RSSFeed) getIntent().getExtras().get("feed");
+        
+        
 
         lView = (ListView) findViewById(R.id.listView);
         lView.setVerticalFadingEdgeEnabled(true);
@@ -94,6 +99,9 @@ public class ListActivity extends ActionBarActivity {
             TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
 
             imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
+
+            relativeListLayout = (RelativeLayout) listItem.findViewById(R.id.listItemLayout);
+            
             textTitle.setText(feed.getItem(pos).get_title());
             textDate.setText(feed.getItem(pos).get_date());
 
