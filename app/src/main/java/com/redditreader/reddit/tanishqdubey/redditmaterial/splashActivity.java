@@ -14,8 +14,9 @@ import android.view.MenuItem;
 
 
 public class splashActivity extends ActionBarActivity {
-
-    private String RESSFEEDURL = "http://www.reddit.com/r/pics/.rss";
+    
+    public String FEEDNAME = "pics";
+    private String RESSFEEDURL = "http://www.reddit.com/r/"+ FEEDNAME +".rss";
 
     RSSFeed feed;
 

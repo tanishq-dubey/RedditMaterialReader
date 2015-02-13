@@ -13,6 +13,15 @@ public class RSSItem implements Serializable {
     private String _link = null;
     private int _backGroundColor;
     private int _textColor;
+    private boolean _textPost;
+    
+    public void setTextPost(boolean textPost){
+        _textPost = textPost;
+    }
+    
+    public boolean getTextPost(){
+        return _textPost;
+    }
     
     public int getTextColor(){
         return _textColor;        

@@ -55,18 +55,20 @@ public class DOMParser {
                     String theString = null;
                     String imageURL = null;
                     String nodeName = thisNode.getNodeName();
-
+                    
+                    _item.setTextPost(true);
                     if ("media:thumbnail".equals(nodeName)){
                         imageURL = nodeChild.item(j).getAttributes().getNamedItem("url").getNodeValue();
                         _item.set_image(imageURL);
                         Palette palette = Palette.generate(ImageLoader.simpleGetBitmapFromURL(imageURL));
                         Palette.Swatch swatch = palette.getVibrantSwatch();
+                        _item.setTextPost(false);
                         if (swatch != null){
                             _item.set_backGroundColor(swatch.getRgb());
                             _item.setTextColor(swatch.getTitleTextColor());
                         }else {
-                            _item.set_backGroundColor(Color.GRAY);
-                            _item.setTextColor(Color.DKGRAY);
+                            _item.set_backGroundColor(Color.LTGRAY);
+                            _item.setTextColor(Color.GRAY);
                         }
 
                         theString = null;
@@ -81,7 +83,8 @@ public class DOMParser {
                             _item.set_description(theString);
 
                             //In case no 'media:thumbnail' comes up, placeholder image.
-                            _item.set_image("http://www.imagemagick.org/Usage/canvas/gradient_bilinear.jpg");
+                            _item.set_image("http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif");
+                            
                         } else if ("pubDate".equals(nodeName)){
                             String formattedDate = theString.replace(" +0000", "");
                             _item.set_date(formattedDate);

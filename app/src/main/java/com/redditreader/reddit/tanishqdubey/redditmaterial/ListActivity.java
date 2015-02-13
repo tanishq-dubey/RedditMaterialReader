@@ -4,10 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,15 +99,25 @@ public class ListActivity extends ActionBarActivity {
             ImageView imageView = (ImageView) listItem.findViewById(R.id.thumbImageView);
             TextView textTitle = (TextView) listItem.findViewById(R.id.titleTextView);
             TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
+            TextView textDescription = (TextView) listItem.findViewById(R.id.descriptionTextView);
 
             imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
             relativeListLayout = (RelativeLayout) listItem.findViewById(R.id.listItemLayout);
-            relativeListLayout.setBackgroundColor(feed.getItem(pos).get_backGroundColor());
+           // relativeListLayout.setBackgroundColor(feed.getItem(pos).get_backGroundColor());
             
+            if (feed.getItem(pos).getTextPost()){
+                textDescription.setText(Html.fromHtml(feed.getItem(pos).get_description()));
+
+
+            }else {
+                textDescription.setText("");
+            }
+            
+            textDescription.setTextColor(Color.DKGRAY);
             textTitle.setText(feed.getItem(pos).get_title());
-            textTitle.setTextColor(feed.getItem((pos)).getTextColor());
+            textTitle.setTextColor(Color.DKGRAY);
             textDate.setText(feed.getItem(pos).get_date());
-            textDate.setTextColor(feed.getItem(pos).getTextColor());
+            textDate.setTextColor(Color.DKGRAY);
 
             return listItem;
         }
