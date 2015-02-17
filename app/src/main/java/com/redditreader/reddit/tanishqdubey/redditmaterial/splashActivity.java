@@ -15,8 +15,8 @@ import android.view.MenuItem;
 
 public class splashActivity extends ActionBarActivity {
     
-    public String FEEDNAME = "pics";
-    private String RESSFEEDURL = "http://www.reddit.com/r/"+ FEEDNAME +".rss";
+    public String FEEDNAME = "dinnerconspiracies";
+    private String RESSFEEDURL = "http://www.reddit.com/r/"+ FEEDNAME +"/.json";
 
     RSSFeed feed;
 
@@ -52,8 +52,10 @@ public class splashActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            DOMParser parser = new DOMParser();
-            feed = parser.parseXml(RESSFEEDURL);
+            //DOMParser parser = new DOMParser();
+            //feed = parser.parseXml(RESSFEEDURL);
+            JSONParser parser = new JSONParser();
+            feed = parser.parseJSON(RESSFEEDURL);
             return null;
         }
 

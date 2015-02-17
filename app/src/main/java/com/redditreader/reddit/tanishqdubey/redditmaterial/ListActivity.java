@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -103,12 +104,10 @@ public class ListActivity extends ActionBarActivity {
 
             imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
             relativeListLayout = (RelativeLayout) listItem.findViewById(R.id.listItemLayout);
-           // relativeListLayout.setBackgroundColor(feed.getItem(pos).get_backGroundColor());
             
             if (feed.getItem(pos).getTextPost()){
                 textDescription.setText(Html.fromHtml(feed.getItem(pos).get_description()));
-
-
+                textTitle.setBackgroundColor(Color.argb(255,63,81,181));
             }else {
                 textDescription.setText("");
             }
