@@ -45,7 +45,7 @@ public class JSONParser {
                         _item.set_description(data.getString(TAG_SELFTEXT));
                         _item.set_title(data.getString(TAG_TITLE));
                         _item.set_link(data.getString(TAG_LINK));
-                        _item.set_date(data.getString(TAG_AUTHOR));
+                        _item.set_date(data.getString(TAG_AUTHOR) + " " +data.getString(TAG_DOMAIN));
                         if (data.getString(TAG_SELFTEXT).equals("")){
                             _item.setTextPost(false);
                             _item.set_image(data.getString(TAG_LINK));

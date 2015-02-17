@@ -107,16 +107,14 @@ public class ListActivity extends ActionBarActivity {
             
             if (feed.getItem(pos).getTextPost()){
                 textDescription.setText(Html.fromHtml(feed.getItem(pos).get_description()));
-                textTitle.setBackgroundColor(Color.argb(255,63,81,181));
+                imageView.setImageResource(R.drawable.stubreplace);
             }else {
                 textDescription.setText("");
+                
             }
-            
-            textDescription.setTextColor(Color.DKGRAY);
+
             textTitle.setText(feed.getItem(pos).get_title());
-            textTitle.setTextColor(Color.DKGRAY);
             textDate.setText(feed.getItem(pos).get_date());
-            textDate.setTextColor(Color.DKGRAY);
 
             return listItem;
         }

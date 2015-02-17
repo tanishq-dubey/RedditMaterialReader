@@ -33,7 +33,7 @@ public class ImageLoader {
         executorService=Executors.newFixedThreadPool(5);
     }
 
-    final int stub_id=R.drawable.ic_launcher;
+    final int stub_id=R.drawable.stubreplace;
     public void DisplayImage(String url, ImageView imageView)
     {
         imageViews.put(imageView, url);
@@ -96,7 +96,7 @@ public class ImageLoader {
             stream1.close();
 
             //Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE=70;
+            final int REQUIRED_SIZE=400;
             int width_tmp=o.outWidth, height_tmp=o.outHeight;
             int scale=1;
             while(true){

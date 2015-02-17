@@ -1,6 +1,7 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ContentHandler;
 
 /**
  * Created by Tanishq Dubey on 2/16/2015.
@@ -44,8 +46,10 @@ public class JSONRetriver {
                 while((line = reader.readLine()) !=null){
                     builder.append(line);
                 }
-            } else {
-                Log.e("ERROR: >>", "Failed to download file :(");
+            } else if (statusCode == 429) {
+                Log.e("ERROR: >>", "Too Many Requests");
+            }else{
+                Log.e("ERROR: >>", "Failed to download file, HTTP ERROR: "+statusCode);
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pew="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:id="@+id/listItemLayout"
     android:background="@drawable/layer_dropshadow">
 
-    <ImageView
+    <com.fmsirvent.ParallaxEverywhere.PEWImageView
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:id="@+id/thumbImageView"
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         android:background="#ff303f9f"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -48,6 +49,7 @@
         android:password="false"
         android:phoneNumber="false"
         android:enabled="false"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:background="#3d585858" />
 
 </RelativeLayout>

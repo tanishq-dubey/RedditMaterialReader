@@ -29,4 +29,5 @@ dependencies {
     compile files('libs/jsoup-1.8.1.jar')
     compile 'com.github.navasmdc:MaterialDesign:1.2@aar'
     compile 'com.android.support:palette-v7:21.0.2'
+    compile 'com.fmsirvent:parallaxeverywhere:1.0.1'
 }
