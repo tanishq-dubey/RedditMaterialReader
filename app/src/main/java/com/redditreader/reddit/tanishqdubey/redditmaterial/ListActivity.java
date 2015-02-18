@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baoyz.widget.PullRefreshLayout;
+
+import java.util.List;
+
 
 public class ListActivity extends ActionBarActivity {
 
@@ -32,6 +37,8 @@ public class ListActivity extends ActionBarActivity {
     CustomListAdapter adapter;
     Context mContext;
     RelativeLayout relativeListLayout;
+    PullRefreshLayout pullRefreshLayout;
+    String feedURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,11 @@ public class ListActivity extends ActionBarActivity {
         myApplication = getApplication();
 
         feed = (RSSFeed) getIntent().getExtras().get("feed");
-        
-        
+        feedURL = (String) getIntent().getExtras().get("url");
+
+        Log.e("Grabbed URL: ", feedURL);
+
+        pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pullToRefresh);
 
         lView = (ListView) findViewById(R.id.listView);
         lView.setVerticalFadingEdgeEnabled(true);
@@ -60,6 +70,16 @@ public class ListActivity extends ActionBarActivity {
                 intent.putExtras(bundle);
                 intent.putExtra("pos",position );
                 startActivity(intent);
+            }
+        });
+        
+        /*
+         *  Initiates the pull to refresh action which calls the refreshList method in this class
+         */
+        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList(feedURL);
             }
         });
     }
@@ -119,26 +139,41 @@ public class ListActivity extends ActionBarActivity {
             return listItem;
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-        return true;
+    
+    /*
+     *  refreshList
+     *  -----------
+     *  Arguments:
+     *      String refreshURL : The JSON URL that will be parsed to create a new feed array
+     *
+     *  Description:
+     *      This method simply takes a JSON URL and parses it using the JSONParser and sets the
+     *      existing feed array to the newly parsed JSON file. Then the list is reset and populated
+     *      with the new feed information and any refresh actions are stopped. This all happens in a
+     *      new thread to avoid any app hangs
+     *      
+     *      Can also be used to set a new feed instead of just refreshing as the name suggests
+     */
+    public void refreshList (final String refreshURL){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.v("About to parse this: ", refreshURL);
+                JSONParser tempjsonParser = new JSONParser();
+                feed = tempjsonParser.parseJSON(refreshURL);
+                
+                ListActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(feed != null && feed.get_itemcount() >0){
+                            adapter.notifyDataSetChanged();
+                        }
+                        pullRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
+    thread.start();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    
 }
