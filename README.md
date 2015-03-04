@@ -14,7 +14,7 @@ Covers topics like:
 ##ToDo
   - Implement more Material interfaces
   - Add sidebar to switch saved subreddits
-  - [Strech Goal] Login and up/downvote
+  - [Stretch Goal] Login and up/downvote
 
 ##Completed Goals
   - Add functionality to switch subreddits
