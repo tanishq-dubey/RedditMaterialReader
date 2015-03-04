@@ -60,16 +60,6 @@ public class DOMParser {
                     if ("media:thumbnail".equals(nodeName)){
                         imageURL = nodeChild.item(j).getAttributes().getNamedItem("url").getNodeValue();
                         _item.set_image(imageURL);
-                        Palette palette = Palette.generate(ImageLoader.simpleGetBitmapFromURL(imageURL));
-                        Palette.Swatch swatch = palette.getVibrantSwatch();
-                        _item.setTextPost(false);
-                        if (swatch != null){
-                            _item.set_backGroundColor(swatch.getRgb());
-                            _item.setTextColor(swatch.getTitleTextColor());
-                        }else {
-                            _item.set_backGroundColor(Color.LTGRAY);
-                            _item.setTextColor(Color.GRAY);
-                        }
 
                         theString = null;
                     }else {

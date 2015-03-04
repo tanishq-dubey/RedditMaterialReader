@@ -1,16 +1,10 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
-import android.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebChromeClient;
+import android.support.v7.app.ActionBarActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 
 public class DetailActivity extends ActionBarActivity {
@@ -34,8 +28,6 @@ public class DetailActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         WebSettings webSettings =  descriptionView.getSettings();
-        webSettings.getPluginState();
-        webSettings.setPluginState(WebSettings.PluginState.ON);
         webSettings.setJavaScriptEnabled(true);
 
         descriptionView.setWebViewClient(new WebViewClient());

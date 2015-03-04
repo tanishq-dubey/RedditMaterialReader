@@ -1,16 +1,13 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -30,9 +26,8 @@ import android.widget.TextView;
 
 import com.baoyz.widget.PullRefreshLayout;
 
-import java.util.List;
 
-
+@SuppressWarnings("EqualsBetweenInconvertibleTypes")
 public class ListActivity extends ActionBarActivity {
 
     Application myApplication;
@@ -43,7 +38,6 @@ public class ListActivity extends ActionBarActivity {
     RelativeLayout relativeListLayout;
     PullRefreshLayout pullRefreshLayout;
     String feedURL;
-    boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +61,7 @@ public class ListActivity extends ActionBarActivity {
         lView.setAdapter(adapter);
         
         //Set feed to a default value in case feed is bad or something.
-        if(feed == null){
+        if(feed == null ||feed.get_itemcount() ==0){
             RSSItem defaultNullItem = new RSSItem();
             defaultNullItem.set_title("Error Retrieving Posts");
             defaultNullItem.set_date(" ");
@@ -96,7 +90,17 @@ public class ListActivity extends ActionBarActivity {
             @Override
             public void onRefresh() {
                 refreshList(feedURL);
+                if(feed == null){
+                    RSSItem defaultNullItem = new RSSItem();
+                    defaultNullItem.set_title("Error Retrieving Posts");
+                    defaultNullItem.set_date(" ");
+                    defaultNullItem.set_image("http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif");
+                    defaultNullItem.set_description("Please refresh to try again!");
+                    feed.addItem(defaultNullItem);
+                    adapter.notifyDataSetChanged();
+                }
             }
+            
         });
     }
 
@@ -124,33 +128,56 @@ public class ListActivity extends ActionBarActivity {
         public long getItemId(int position) {
             return position;
         }
+        
+        class feedViewHolder{
+            
+            ImageView imageView;
+            TextView textTitle;
+            TextView textDate;
+            TextView textDescription;
+            
+            feedViewHolder(View v){
+                imageView = (ImageView) v.findViewById(R.id.thumbImageView);
+                textTitle = (TextView) v.findViewById(R.id.titleTextView);
+                textDate =(TextView) v.findViewById(R.id.dateTextView);
+                textDescription = (TextView) v.findViewById(R.id.descriptionTextView);
+                
+            }
+        }
 
+        @SuppressLint("InflateParams")
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View listItem = convertView;
-            int pos = position;
+            feedViewHolder holder;
+            
+            
             if(listItem == null){
                 listItem = layoutInflater.inflate(R.layout.listitem_layout,null);
+                holder= new feedViewHolder(listItem);
+                listItem.setTag(holder);
+            }else {
+                holder = (feedViewHolder) listItem.getTag();
             }
 
-            ImageView imageView = (ImageView) listItem.findViewById(R.id.thumbImageView);
-            TextView textTitle = (TextView) listItem.findViewById(R.id.titleTextView);
-            TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
-            TextView textDescription = (TextView) listItem.findViewById(R.id.descriptionTextView);
+//            ImageView imageView = (ImageView) listItem.findViewById(R.id.thumbImageView);
+//            TextView textTitle = (TextView) listItem.findViewById(R.id.titleTextView);
+//            TextView textDate =(TextView) listItem.findViewById(R.id.dateTextView);
+//            TextView textDescription = (TextView) listItem.findViewById(R.id.descriptionTextView);
 
-            imageLoader.DisplayImage(feed.getItem(pos).get_image(), imageView);
+            imageLoader.DisplayImage(feed.getItem(position).get_image(), holder.imageView);
             relativeListLayout = (RelativeLayout) listItem.findViewById(R.id.listItemLayout);
             
-            if (feed.getItem(pos).getTextPost()){
-                textDescription.setText(Html.fromHtml(feed.getItem(pos).get_description()));
-                imageView.setImageResource(R.drawable.stubreplace);
+            if (feed.getItem(position).getTextPost()){
+                holder.textDescription.setText(Html.fromHtml(feed.getItem(position).get_description()));
+                holder.imageView.setImageResource(R.drawable.stubreplace);
             }else {
-                textDescription.setText("");
+                holder.textDescription.setText("");
                 
             }
 
-            textTitle.setText(feed.getItem(pos).get_title());
-            textDate.setText(feed.getItem(pos).get_date());
+            holder.textTitle.setText(feed.getItem(position).get_title());
+            holder.textDate.setText(feed.getItem(position).get_date());
 
             return listItem;
         }
@@ -182,6 +209,14 @@ public class ListActivity extends ActionBarActivity {
                     @Override
                     public void run() {
                         if(feed != null && feed.get_itemcount() >0){
+                            adapter.notifyDataSetChanged();
+                        }else{
+                            RSSItem defaultNullItem = new RSSItem();
+                            defaultNullItem.set_title("Error Retrieving Posts");
+                            defaultNullItem.set_date(" ");
+                            defaultNullItem.set_image("http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif");
+                            defaultNullItem.set_description("Please refresh to try again!");
+                            feed.addItem(defaultNullItem);
                             adapter.notifyDataSetChanged();
                         }
                         pullRefreshLayout.setRefreshing(false);
@@ -216,13 +251,19 @@ public class ListActivity extends ActionBarActivity {
                 alert.setPositiveButton("Go", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(searchText.getText() != null){
-                            String urlText = "http://www.reddit.com/r/" + searchText.getText() + "/.json";
-                            feedURL = urlText;
-                            refreshList(urlText);
-                            dialog.dismiss();
-                            
+                        try {
+                            if((searchText.getText() != null) || searchText.getText().equals("")){
+                                String urlText = "http://www.reddit.com/r/" + searchText.getText() + "/.json";
+                                feedURL = urlText;
+                                refreshList(urlText);
+                                dialog.dismiss();
+                            }else{
+                                dialog.dismiss();
+                            }
+                        }catch (NullPointerException e){
+                            Log.e("Error in getting text", "error");
                         }
+
                     }
                 });
                 
@@ -239,4 +280,6 @@ public class ListActivity extends ActionBarActivity {
         }
 
     }
+    
+
 }

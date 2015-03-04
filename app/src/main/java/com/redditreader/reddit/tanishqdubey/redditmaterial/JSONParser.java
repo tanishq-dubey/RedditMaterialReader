@@ -2,9 +2,8 @@ package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 /**
  * Created by Tanishq Dubey on 2/13/2015.
+ * Parses the JSON File*
  */
-
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;

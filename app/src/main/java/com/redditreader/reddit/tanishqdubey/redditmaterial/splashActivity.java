@@ -1,18 +1,13 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
+import android.support.v7.app.ActionBarActivity;
 
 
 public class splashActivity extends ActionBarActivity {

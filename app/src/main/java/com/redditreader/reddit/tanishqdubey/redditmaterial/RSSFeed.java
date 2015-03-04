@@ -6,6 +6,7 @@ import java.util.Vector;
 
 /**
  * Created by Tanishq Dubey on 1/14/2015.
+ * RSS Feed Object*
  */
 public class RSSFeed implements Serializable {
 

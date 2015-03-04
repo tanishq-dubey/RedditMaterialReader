@@ -1,7 +1,6 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,15 +16,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.ContentHandler;
 
 /**
  * Created by Tanishq Dubey on 2/16/2015.
+ * Gets a JSON From provided Link*
  */
 public class JSONRetriver {
-    static InputStream inputStream = null;
     static JSONArray jsonArray = null;
-    static  String json = "";
     
     public JSONRetriver(){
     }
@@ -55,6 +52,7 @@ public class JSONRetriver {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("IOE", "Stack");
         }
         
         try{

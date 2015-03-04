@@ -11,8 +11,6 @@ public class RSSItem implements Serializable {
     private String _date = null;
     private String _image = null;
     private String _link = null;
-    private int _backGroundColor;
-    private int _textColor;
     private boolean _textPost;
     
     public void setTextPost(boolean textPost){
@@ -21,22 +19,6 @@ public class RSSItem implements Serializable {
     
     public boolean getTextPost(){
         return _textPost;
-    }
-    
-    public int getTextColor(){
-        return _textColor;        
-    }
-    
-    public void setTextColor(int textColor){
-        _textColor = textColor;
-    }
-    
-    public int get_backGroundColor(){
-        return _backGroundColor; 
-    }
-    
-    public void set_backGroundColor(int backgroundColor) {
-        _backGroundColor = backgroundColor;        
     }
 
     public String get_link() {
