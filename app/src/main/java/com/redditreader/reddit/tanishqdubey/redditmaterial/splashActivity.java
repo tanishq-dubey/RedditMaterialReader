@@ -11,11 +11,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 
 public class splashActivity extends ActionBarActivity {
     
-    public String FEEDNAME = "/r/pics";
+    public String FEEDNAME = "";
     private String RESSFEEDURL = "http://www.reddit.com"+ FEEDNAME +"/.json";
 
     RSSFeed feed;
@@ -24,6 +26,8 @@ public class splashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

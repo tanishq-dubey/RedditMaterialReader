@@ -31,6 +31,7 @@ public class DetailActivity extends ActionBarActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Material Reddit");
         actionBar.setSubtitle(feed.getItem(pos).get_title());
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         WebSettings webSettings =  descriptionView.getSettings();
         webSettings.getPluginState();

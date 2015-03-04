@@ -1,7 +1,9 @@
 package com.redditreader.reddit.tanishqdubey.redditmaterial;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,12 +15,14 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,13 +43,14 @@ public class ListActivity extends ActionBarActivity {
     RelativeLayout relativeListLayout;
     PullRefreshLayout pullRefreshLayout;
     String feedURL;
+    boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         mContext = this;
-
+        
         myApplication = getApplication();
 
         feed = (RSSFeed) getIntent().getExtras().get("feed");
@@ -60,6 +65,17 @@ public class ListActivity extends ActionBarActivity {
 
         adapter = new CustomListAdapter(this);
         lView.setAdapter(adapter);
+        
+        //Set feed to a default value in case feed is bad or something.
+        if(feed == null){
+            RSSItem defaultNullItem = new RSSItem();
+            defaultNullItem.set_title("Error Retrieving Posts");
+            defaultNullItem.set_date(" ");
+            defaultNullItem.set_image("http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif");
+            defaultNullItem.set_description("Please refresh to try again!");
+            feed.addItem(defaultNullItem);
+            adapter.notifyDataSetChanged();
+        }
 
         lView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
@@ -175,5 +191,52 @@ public class ListActivity extends ActionBarActivity {
         });
     thread.start();
     }
-    
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        
+        inflater.inflate(R.menu.action_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_search:
+                final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+                
+                alert.setTitle("Subreddit Search");
+                alert.setMessage("Enter a Subreddit:");
+                
+                final EditText searchText = new EditText(this);
+                alert.setView(searchText);
+                
+                alert.setPositiveButton("Go", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(searchText.getText() != null){
+                            String urlText = "http://www.reddit.com/r/" + searchText.getText() + "/.json";
+                            feedURL = urlText;
+                            refreshList(urlText);
+                            dialog.dismiss();
+                            
+                        }
+                    }
+                });
+                
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        
+                    }
+                });
+                alert.show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 }
